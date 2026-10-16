@@ -1,89 +1,62 @@
 # AgroClimate AI 🌾🌡️
 
-Climate-Smart Agriculture Platform using NASA-IBM Weather Model for Precision Farming
+Climate information and practical planning ideas for climate-smart agriculture.
 
 ## Overview
 
-AgroClimate AI is an innovative platform that leverages NASA and IBM's weather prediction model to help farmers make informed decisions about their agricultural practices. By combining real-time climate data with advanced machine learning models, we provide actionable insights for sustainable and efficient farming.
+The current homepage sample uses NASA POWER monthly climate normals and explainable seasonal rules. Climate normals describe long-term patterns; they are not a current weather forecast. Recommendations are general examples and are not crop- or soil-specific agronomic advice.
 
-## Project Structure
+## Project structure
 
 ```
 agroclimate-ai/
-├── src/                    # Source code
-│   ├── frontend/          # Frontend application (Next.js)
-│   ├── backend/           # Backend API services (FastAPI)
-│   ├── ml_model/          # Machine learning models
-│   └── data_pipeline/     # Data processing pipelines
-├── docs/                  # Documentation
-├── tests/                 # Test suites
-├── scripts/              # Utility scripts
-└── config/               # Configuration files
+├── src/
+│   ├── frontend/       Next.js homepage and climate-data route
+│   ├── backend/        FastAPI climate API foundation
+│   ├── data_pipeline/  NASA/IBM connector scaffolding
+│   └── ml_model/       Experimental model scaffolding
+└── tests/              Backend unit tests
 ```
 
-## Features
+The NASA POWER route uses its public Agroclimatology climate-normal endpoint. It does not require the `api.nasa.gov` key. The IBM connector and machine-learning modules are placeholders, not active prediction services.
 
-- 🛰️ NASA-IBM Weather Model Integration
-- 📊 Real-time Climate Data Analysis
-- 🤖 Machine Learning-based Predictions
-- 🌱 Crop Recommendation System
-- ⚡ Real-time Alerts and Notifications
-- 📱 Farmer-friendly Dashboard
-- 📈 Historical Data Analysis
-- 🎯 Precision Agriculture Support
+## Run the frontend
 
-## Getting Started
+```bash
+cd src/frontend
+npm install
+npm run dev
+```
 
-### Prerequisites
+Open [http://localhost:3000](http://localhost:3000).
 
-- Python 3.8+
-- Node.js 16+
-- Docker (optional)
+## Run the FastAPI foundation
 
-### Installation
+In a second terminal:
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Roxonn-FutureTech/agroclimate-ai.git
-   cd agroclimate-ai
-   ```
+```bash
+cd src/backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements-dev.txt
+uvicorn app.main:app --reload --port 8000
+```
 
-2. Install dependencies:
-   ```bash
-   # Backend dependencies
-   cd src/backend
-   pip install -r requirements.txt
+Interactive API docs are at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 
-   # Frontend dependencies
-   cd ../frontend
-   npm install
-   ```
+- `GET /health` checks that the API process is running.
+- `GET /api/v1/climate?latitude=51.5072&longitude=-0.1276` returns the current calendar month's climate normal and an explainable starter suggestion. Pass `month=1..12` to inspect another month.
 
-3. Set up environment variables:
-   ```bash
-   cp config/.env.example config/.env
-   ```
+## Run tests
 
-4. Start the development servers:
-   ```bash
-   # Backend
-   cd src/backend
-   uvicorn main:app --reload
+After installing `src/backend/requirements-dev.txt`:
 
-   # Frontend
-   cd ../frontend
-   npm run dev
-   ```
+```bash
+pytest
+```
 
-## Contributing
-
-We welcome contributions! Please see our [Contributing Guide](docs/CONTRIBUTING.md) for details.
+NASA responses are mocked in tests; running the suite does not require network access.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-- Website: [roxonn.com](https://roxonn.com)
-- GitHub: [@Roxonn-FutureTech](https://github.com/Roxonn-FutureTech) 
+This project is licensed under the MIT License. See [LICENSE](LICENSE).

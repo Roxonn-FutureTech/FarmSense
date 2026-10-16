@@ -1,0 +1,1 @@
+"""AgroClimate AI FastAPI application."""
